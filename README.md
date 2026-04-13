@@ -1,6 +1,56 @@
 # Azure RBAC Lab: Group-Based Access at Resource Group and Storage Account Scope
 
-This lab documents a simple Azure role-based access control workflow using Microsoft Entra security groups, a resource group, and a storage account. The goal was to assign different permission levels at different scopes and confirm how inherited access appears in Azure IAM.
+## Objective
+
+Document a simple Azure role-based access control workflow using Microsoft Entra security groups, a resource group, and a storage account. The goal was to assign different permission levels at different scopes and confirm how inherited access appears in Azure IAM.
+
+## Environment
+
+- Platform: Microsoft Azure
+- Subscription shown in evidence: `Azure subscription 1`
+- Region shown in build flow: `East US`
+- Evidence source: screenshots captured in Azure portal and Microsoft Entra admin center
+
+## Azure Services Used
+
+- Resource Groups
+- Azure Storage account
+- Microsoft Entra ID groups
+- Azure RBAC
+- Azure IAM at resource group and resource scope
+
+## Resource Details
+
+- Resource group: `rg-azure-lab-rbac`
+- Storage account: `rbaclabstorage01`
+- Storage replication shown in the build screenshots: `RA-GRS`
+- Entra groups:
+  - `Lab-Readers`
+  - `Lab-Contributors`
+
+## Lab Relationship
+
+This lab follows the storage and networking foundation work by shifting from resource creation to identity and authorization. It focuses on who can access resources and at what scope, rather than on network reachability or application validation.
+
+## Steps Performed
+
+1. Created the resource group `rg-azure-lab-rbac`.
+2. Created the storage account `rbaclabstorage01`.
+3. Opened Microsoft Entra and confirmed the tenant initially showed no groups for the lab workflow.
+4. Created the `Lab-Readers` security group.
+5. Created the `Lab-Contributors` security group.
+6. Opened `rg-azure-lab-rbac` and started a new IAM role assignment.
+7. Assigned the `Reader` role to `Lab-Readers` at the resource group scope.
+8. Opened `rbaclabstorage01` and started a new IAM role assignment.
+9. Assigned the `Contributor` role to `Lab-Contributors` at the storage account scope.
+10. Reviewed the final storage-account IAM state to confirm inherited and direct permissions appeared as expected.
+
+## Validation
+
+- `Lab-Readers` received a direct `Reader` assignment on `rg-azure-lab-rbac`.
+- `Lab-Contributors` received a direct `Contributor` assignment on `rbaclabstorage01`.
+- On the storage account IAM page, `Lab-Readers` appeared through inherited access from the resource group.
+- The operator account also appeared as `Owner` inherited from the subscription, but that assignment was not created as part of this lab.
 
 ## Skills Demonstrated
 
@@ -9,47 +59,6 @@ This lab documents a simple Azure role-based access control workflow using Micro
 - Assigning built-in Azure roles
 - Distinguishing direct permissions from inherited permissions
 - Applying least-privilege access design
-
-## Technologies Used
-
-- Microsoft Azure
-- Microsoft Entra ID
-- Azure Resource Manager
-- Azure RBAC
-- Azure Storage account IAM
-
-## Environment / Scope
-
-This lab was performed in:
-
-- Subscription: `Azure subscription 1`
-- Resource group: `rg-azure-lab-rbac`
-- Storage account: `rbaclabstorage01`
-- Storage replication shown in the build screenshots: `RA-GRS`
-- Entra groups:
-  - `Lab-Readers`
-  - `Lab-Contributors`
-
-## High-Level Lab Objectives
-
-Create a resource group and storage account, create two Entra security groups, then assign:
-
-- `Reader` to `Lab-Readers` at the resource-group scope
-- `Contributor` to `Lab-Contributors` at the storage-account scope
-
-The final goal was to confirm that:
-
-- `Reader` access assigned at the resource group flows down to the storage account
-- `Contributor` access assigned directly on the storage account stays specific to that resource
-
-## Results Summary
-
-The screenshots show this final state:
-
-- `Lab-Readers` received a direct `Reader` assignment on `rg-azure-lab-rbac`
-- `Lab-Contributors` received a direct `Contributor` assignment on `rbaclabstorage01`
-- On the storage account IAM page, `Lab-Readers` appeared as `Reader` through inherited access from the resource group
-- An `Owner` assignment for the operator account was also visible as inherited from the subscription, but it was not created as part of the lab workflow
 
 ## Screenshot Gallery
 
@@ -65,14 +74,24 @@ Key evidence from the lab:
 
 ## What I Learned
 
-Azure RBAC becomes easier to reason about when the scope is deliberate. Assigning `Reader` at the resource-group level gives broad visibility across resources in that group, while assigning `Contributor` directly to a single storage account keeps change permissions narrower. The final IAM view makes the inheritance model easier to understand because Azure shows both the direct assignment and the inherited assignment together.
+- Azure RBAC becomes easier to reason about when the scope is deliberate.
+- Assigning `Reader` at the resource-group level gives broad visibility across resources in that group.
+- Assigning `Contributor` directly to a single storage account keeps change permissions narrower.
+- The final IAM view makes the inheritance model easier to understand because Azure shows both the direct assignment and the inherited assignment together.
 
-## Why This Matters
-
-This is a basic but practical Azure administration pattern. In real environments, access is usually managed through groups rather than by assigning roles directly to individual users. That approach is easier to audit, easier to maintain, and better aligned with least-privilege access control.
-
-## Notes
+## Problems Encountered / Notes
 
 - The screenshots were copied into this repo from the original lab folder and the Azure account banner was redacted in the repo copies.
 - This repo documents only what was visible in the screenshots. It does not assume extra steps that were not shown.
 - The storage account uses `RA-GRS` in the captured build flow. That is more than was strictly needed for a low-cost beginner lab, but it is the configuration actually shown in the evidence and is documented as-is.
+- An earlier tenant overview showed zero groups before `Lab-Readers` and `Lab-Contributors` were created, which is consistent with the later IAM workflow shown in the evidence.
+
+## Cost Control and Cleanup
+
+- This lab stayed light on cost because it focused on IAM, group creation, and scoped role assignments rather than on compute resources.
+- The only billable resource clearly shown is the storage account used as the narrower Contributor target.
+- `TODO`: Confirm whether `rg-azure-lab-rbac` and `rbaclabstorage01` were deleted after the lab if you want the repo to claim full cleanup completion.
+
+## Outcome
+
+The lab produced a clear Azure RBAC example with group-based role assignment, scope separation between resource group and resource level, and visible IAM inheritance on the final storage account view.
