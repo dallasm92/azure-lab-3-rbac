@@ -32,6 +32,16 @@ Document a simple Azure role-based access control workflow using Microsoft Entra
 
 This lab follows the storage and networking foundation work by shifting from resource creation to identity and authorization. It focuses on who can access resources and at what scope, rather than on network reachability or application validation.
 
+## Hiring Manager Quick View
+
+| Review area | Evidence |
+|---|---|
+| Identity basics | Microsoft Entra groups for `Lab-Readers` and `Lab-Contributors` |
+| Least privilege | Reader at resource-group scope and Contributor at storage-account scope |
+| Scope awareness | Final IAM view shows direct and inherited assignments separately |
+| Documentation quality | Screenshots map each role-assignment step to the final IAM state |
+| Security handling | Azure account banner redacted before publication |
+
 ## Steps Performed
 
 1. Created the resource group `rg-azure-lab-rbac`.
@@ -90,7 +100,7 @@ Key evidence from the lab:
 
 - This lab stayed light on cost because it focused on IAM, group creation, and scoped role assignments rather than on compute resources.
 - The only billable resource clearly shown is the storage account used as the narrower Contributor target.
-- `TODO`: Confirm whether `rg-azure-lab-rbac` and `rbaclabstorage01` were deleted after the lab if you want the repo to claim full cleanup completion.
+- Final resource deletion is not claimed in this public writeup because the current evidence set focuses on RBAC configuration and IAM validation, not cleanup screenshots.
 
 ## Outcome
 
