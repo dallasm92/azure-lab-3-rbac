@@ -1,4 +1,4 @@
-# Azure RBAC Lab Guide
+# Azure Lab 3 RBAC Guide
 
 This walkthrough is based only on the screenshots included in this repo.
 

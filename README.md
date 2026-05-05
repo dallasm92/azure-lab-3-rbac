@@ -1,4 +1,4 @@
-# Azure RBAC Lab: Group-Based Access at Resource Group and Storage Account Scope
+# Azure Lab 3: RBAC at Resource Group and Storage Account Scope
 
 Social preview asset:
 - [assets/social-preview.png](assets/social-preview.png)
