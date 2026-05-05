@@ -1,5 +1,8 @@
 # Azure RBAC Lab: Group-Based Access at Resource Group and Storage Account Scope
 
+Social preview asset:
+- [assets/social-preview.png](assets/social-preview.png)
+
 ## Objective
 
 Document a simple Azure role-based access control workflow using Microsoft Entra security groups, a resource group, and a storage account. The goal was to assign different permission levels at different scopes and confirm how inherited access appears in Azure IAM.
